@@ -1,0 +1,19 @@
+extends index
+
+template content
+        div#test
+|<scripts id="rentals" type="text/html">
+|<table class="bordered-table zebra-striped">
+|  <thead>
+|   <tr>
+|    <th>Rentals</th>
+|   </tr>
+|  </thead>
+|  <tbody>
+|  {{#rentals}}
+|   <tr id={{id}}>
+|    <td>{{ApartmentName}} - {{Location}}</td>
+|   </tr>
+|  </tbody>
+|</table>
+|</scripts>
