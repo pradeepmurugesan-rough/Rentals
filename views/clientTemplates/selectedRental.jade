@@ -1,0 +1,17 @@
+.span6.form-horizontal
+ -if(selectedRental)
+   -var icon = "icon-remove"
+   -if(selectedRental.visited)
+     -icon = "icon-ok"
+   h3= selectedRental.ApartmentName + " @ " + selectedRental.Location
+    span(class=icon)
+   ul
+     li= selectedRental.OwnerOrDealer + " - " + selectedRental.OwnerName
+     li= selectedRental.RentAmount
+     li= selectedRental.OwnerPhone
+     li= selectedRental.webpage
+   -if(!selectedRental.visited)
+     div(id=selectedRental.id)
+      button#visited.btn.btn-success Mark as Visited
+ -else
+   h3="Please click on the rental to view the details here" 

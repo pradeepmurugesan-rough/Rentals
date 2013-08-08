@@ -10,3 +10,40 @@ a {
 {
   background-color: blue;
 }
+
+#apartmentDetails h2 {
+  font: 400 30px/1.5 Helvetica, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+ 
+#apartmentDetails ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+ 
+#apartmentDetails li {
+  font: 200 20px/1.5 Helvetica, Verdana, sans-serif;
+}
+ 
+#apartmentDetails li:last-child {
+  border: none;
+}
+ 
+#apartmentDetails li a {
+  text-decoration: none;
+  color: #000;
+  display: block;
+  width: 200px;
+ 
+  -webkit-transition: font-size 0.3s ease, background-color 0.3s ease;
+  -moz-transition: font-size 0.3s ease, background-color 0.3s ease;
+  -o-transition: font-size 0.3s ease, background-color 0.3s ease;
+  -ms-transition: font-size 0.3s ease, background-color 0.3s ease;
+  transition: font-size 0.3s ease, background-color 0.3s ease;
+}
+ 
+#apartmentDetails li a:hover {
+  background: #f6f6f6;
+}

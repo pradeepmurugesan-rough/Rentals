@@ -13,13 +13,9 @@ var Rentals = {
         $(".nav").click(function(event){
             event.preventDefault();
             if($(event.target).parent().is("#newRental")) {
-                $("li.active").removeClass("active");
-                $(event.target).parent().addClass("active");
                 Rentals.createRental();
             } 
             else if($(event.target).parent().is("#rentals")) {
-                $("li.active").removeClass("active");
-                $(event.target).parent().addClass("active");
                 Rentals.getRentals();
             }
         });
@@ -27,6 +23,21 @@ var Rentals = {
             if($(event.target).is("#create")){
                 Rentals.postRental();
             }
+            else if($(event.target).is("td")) {
+                rentalId = $(event.target).parent().attr("id");
+                Rentals.getRental(rentalId);
+            }
+            else if($(event.target).is("#visited"))
+            {
+                rentalId = $(event.target).parent().attr("id");
+                Rentals.markVisited(rentalId);               
+            }        
+        });
+    },
+    markVisited: function(id) {
+        $.get("/visited/" + id, function(){
+            Rentals.getRentals();
+            Rentals.getRental(id);
         });
     },
     postRental: function() {
@@ -59,16 +70,29 @@ var Rentals = {
 
     },
     getRentals: function() {
+        Rentals.toggleActive("rentals");
         $.getJSON("/rentals", function(data){
             var view = {"rentals": data};
-            $("#contentArea").html(ich.rentals(view));
+            $("#contentArea").html(templatizer.rentals(view));
+            $("#apartmentDetails").html(templatizer.selectedRental({selectedRental: null}));
         });
     },
     getRental: function(id) {
-        
+        $.getJSON("/rentals/" + id , function(data){
+            var rental = data[0];
+            if(rental.visited[0]) {
+                rental.visited = true;
+            }
+            else {
+                rental.visited = false;
+            }
+            var view = {"selectedRental" : rental};
+            $("#apartmentDetails").html(templatizer.selectedRental(view));  
+        });
     },
     createRental: function(rental) {
-        $("#contentArea").html(ich.newRental());
+        Rentals.toggleActive("newRental");
+        $("#contentArea").html(templatizer.newRental());
     },
     validateData: function() {
         valid = true;
@@ -79,6 +103,10 @@ var Rentals = {
             valid = false;
         }
         return valid;
+    },
+    toggleActive: function(id) {
+        $("li.active").removeClass("active");
+        $("#" + id).addClass("active");
     },
 
 

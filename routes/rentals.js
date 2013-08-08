@@ -14,7 +14,7 @@ db.connect(function(error) {
 });
 
 exports.list = function(req, res) {
-    var sql = "SELECT * FROM Rentals.Rental;";
+    var sql = "SELECT Id, ApartmentName, Location, cast(Visited AS UNSIGNED) AS Visited FROM Rentals.Rental;";
     var rentals = [];
     db.query(sql, function(error, results) { 
         if(error) {
@@ -27,14 +27,31 @@ exports.list = function(req, res) {
     });
     //res.send(JSON.stringify(rentals));
 };
-
+exports.markVisited = function(req, res) {
+    var sql = "UPDATE Rentals.Rental SET Visited = true  where Rental.id = " + req.params.id ;
+    db.query(sql, function(error, results) {
+        if(error) {
+            res.send({ "error" : true });
+        }
+        else {
+            res.send("success");
+        }
+    });
+};
 exports.findById = function(req, res) {
-    res.send("the requested id is " + req.params.id);
+    var sql = "SELECT * FROM Rentals.Rental where Rental.id = " + req.params.id ;
+    db.query(sql, function(error, results) {
+        if(error) {
+            res.send({ "error" : true });
+        }
+        else {
+            res.send(results);
+        }
+    });
 };
 
 exports.addRental = function(req, res) {
     rental = req.body;
-    console.log("adding a new rental " + JSON.stringify(rental));
     var sql = "INSERT INTO `Rentals`.`Rental` (`ApartmentName`, `OwnerOrDealer`, `webpage`, `visited`, `RentAmount`, `Location`, `OwnerName`, `OwnerPhone`) VALUES ( '" +
         rental.ApartmentName + "','" +
         rental.OwnerOrDealer+ "','" +

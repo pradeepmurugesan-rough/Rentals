@@ -1,0 +1,16 @@
+.well.span4
+  table.table
+   thead
+    tr
+      th Rentals
+      th(style='width: 36px;')
+   tbody
+    each rental in rentals
+      tr(id=rental.Id)
+        -var icon = "icon-remove"
+        -if(rental.Visited)
+          -icon = "icon-ok"
+        -icon =  icon + " pull-right"
+        td=rental.ApartmentName + " @ " + rental.Location
+          span(class=icon)  
+#apartmentDetails
